@@ -13,7 +13,7 @@ TOKEN = config('TOKEN')
 async def load_extensions(bot):
     for filename in os.listdir("./commands"):
         if filename.endswith(".py"):
-            print(f' - Carregaado: {filename[:-3]}')
+            print(f' - Carregado: {filename[:-3]}')
             await bot.load_extension(f"commands.{filename[:-3]}")
 
 async def main():

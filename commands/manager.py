@@ -14,7 +14,6 @@ class Manager(commands.Cog):
         print(f'Estou pronto! Estou conectado como {self.bot.user}')
         
     
-
     #Impedir o Bot ver as próprias mensagens
     # Filtro de Palavras do Bot
     @commands.Cog.listener()
@@ -30,6 +29,8 @@ class Manager(commands.Cog):
                 (f'{message.author.name}, você está querendo arranjar briga comigo? \nVem Tranquilo ...'),
             ]
             await message.channel.send(random.choice(list_resp))
+        
+        
         
 
         
