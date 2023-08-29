@@ -1,5 +1,5 @@
 
-
+import discord
 from discord.ext import commands
 
 class Clips(commands.Cog):
@@ -11,6 +11,9 @@ class Clips(commands.Cog):
         #Implementar API para captura de clips
         await ctx.send('Erro - Verifique o Log de registro no terminal')
         await ctx.send('Desculpe, comando ainda não implementado.')
+        await ctx.send('Tomar Nota:  caso não conseguir api livre da twitch, gerar um db sqlite3 com links dos clipes para administração pelo bot.')
+
+
     
 
 async def setup(bot):

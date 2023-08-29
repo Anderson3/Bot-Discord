@@ -1,5 +1,6 @@
 
 import random
+import discord
 from discord.ext import commands
 
 class Manager(commands.Cog):
@@ -12,6 +13,8 @@ class Manager(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print(f'Estou pronto! Estou conectado como {self.bot.user}')
+        await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="Paramoremingos"))
+
         
     
     #Impedir o Bot ver as próprias mensagens

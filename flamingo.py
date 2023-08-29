@@ -6,7 +6,7 @@ from decouple import config
 
 intents = discord.Intents.all()
 intents.members = True
-bot = commands.Bot(command_prefix='f!', intents=intents)
+bot = commands.Bot(command_prefix='!', intents=intents)
 
 TOKEN = config('TOKEN')
 
