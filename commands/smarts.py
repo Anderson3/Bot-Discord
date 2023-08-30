@@ -17,7 +17,7 @@ class Smarts(commands.Cog):
     async def get_city_temperature(self, ctx, *args):
         cidade = ' '.join(args)
         print(cidade)
-        API_TEMPO = 'ec5eb2abed5765d5372423e4d3a0cdfa'
+        API_TEMPO = config('API_TEMPO')
         req = requests.get("https://api.openweathermap.org/data/2.5/weather?q="+cidade+"&appid="+API_TEMPO+"&lang=pt_br")
 
         try:
