@@ -7,30 +7,44 @@ from discord.ext import commands
 class Smarts(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+    
+    @commands.command(name='ping')
+    async def ping(self, ctx):
+        await ctx.reply(f'*Pong!* - **Latência de {round(self.bot.latency * 1000)}ms **')
 
 
     @commands.command(name='tempo')
-    async def load_clips(self, ctx, *args):
-        city = args[0]
-        req = requests.get('https://api.api-ninjas.com/v1/geocoding?city='+city, headers={'X-Api-Key': '8zF4dEsOBx4cfzqQ4Pc8Xw==7VukABeFVan7N5R9'})
-        cidade = req.json()[0]
-        lat, long = cidade['latitude'], cidade['longitude']
+    async def get_city_temperature(self, ctx, *args):
+        cidade = ' '.join(args)
+        print(cidade)
+        API_TEMPO = 'ec5eb2abed5765d5372423e4d3a0cdfa'
+        req = requests.get("https://api.openweathermap.org/data/2.5/weather?q="+cidade+"&appid="+API_TEMPO+"&lang=pt_br")
 
-        req = requests.get('https://api.open-meteo.com/v1/dwd-icon?latitude='+str(lat)+'&longitude='+str(long)+'&hourly=temperature_2m,relativehumidity_2m,windspeed_10m')
+        try:
+            cidade = req.json()['name']
+            termica_sensacao = int(req.json()['main']['feels_like'] - 273.15)
+            temperatura = int(req.json()['main']['temp'] - 273.15)
+            max_temperatura = int(req.json()['main']['temp_max'] - 273.15)
+            min_temperatura = int(req.json()['main']['temp_min'] - 273.15)
+
+            condicao_tempo = req.json()['weather'][0]['description']
+            velocidade_vento = req.json()['wind']['speed']
+            angulo_vento = req.json()['wind']['deg']
+
+            await ctx.send(f'*{cidade.upper()} está atualmente com temperatura de {temperatura}°C (máxim: {max_temperatura}°C, e mínima: {min_temperatura}°C). A sensação térmica é de {termica_sensacao}°C, e as condições do tempo é {condicao_tempo}, com ventos de {velocidade_vento}Km/h a {angulo_vento}°.*')
+
+            if temperatura > 15:
+                await ctx.send('Essa temperatura é quente pra flamingos 🔥🌡️☀️.')
+            else:
+                await ctx.send('Essa temperatura é fria pra flamingos ❄️☃️🌨️.')
 
 
-        umidade_relativa = req.json()['hourly']['relativehumidity_2m'][0]
-        temperatura = req.json()['hourly']['temperature_2m'][0]
-        horario = req.json()['hourly']['time'][0]
-        vento_velocidade = req.json()['hourly']['windspeed_10m'][0]
+        except Exception as error:
+            print('Erro: ', error)
+            print('Infelizmente não foi possível verificar essa cidade no momento. Verifique se o nome da cidade está correto, meu nobre.')
+            
 
-        await ctx.send(f'*{city.upper()}, está atualmente com Temperatura de {temperatura}°C, Humidade relativa de {umidade_relativa}% e ventos a {vento_velocidade} km/h.* Resgistrado em {horario}.')
         
-        if temperatura > 15:
-            await ctx.send('Essa temperatura é quente pra flamingos 🔥🌡️☀️.')
-        else:
-            await ctx.send('Essa temperatura é fria pra flamingos ❄️☃️🌨️.')
-    
 
     
         

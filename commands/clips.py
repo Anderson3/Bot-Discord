@@ -6,6 +6,11 @@ class Clips(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
+    @commands.command(name='live')
+    async def live(self, ctx):
+        await ctx.send('As live da Rekatherini acontecem na Twitch')
+        await ctx.send('https://www.twitch.tv/rekatherini')
+    
     @commands.command(name='carregar_clip')
     async def load_clips(self, ctx):
         #Implementar API para captura de clips
